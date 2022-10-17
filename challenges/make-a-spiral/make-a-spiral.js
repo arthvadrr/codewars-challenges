@@ -1,13 +1,9 @@
 const spiralize = n => {
   const board = [];
-  let xStart = 0;
-  let xEnd = n - 2;
-  let yStart = 0;
-  let yEnd = n - 2;
-  let pathfinding = true;
+  let range = n - 1;
+  let start = 0;
   let position = [0, 0];
   let count = 0;
-  let iteration = 0;
 
   const createRow = () =>
     '0'
@@ -21,61 +17,47 @@ const spiralize = n => {
   const down = ([y, x]) => [y, x + 1];
   const flip = ([y, x]) => (board[x][y] = 1);
 
+  //Add rows to the board
   Array.from({ length: n }, () => board.push(createRow()));
 
-  while (pathfinding) {
-    //go right
-    while (position[0] <= xEnd - iteration) {
-      flip(position);
+  while (count < n) {
+    flip(position);
+
+    while (position[0] < range) {
       move(right);
+      flip(position);
     }
     count++;
-
-    if (count === n) {
-      pathfinding = false;
-      break;
-    }
+    if (count === n) break;
 
     //go down
-    while (position[1] <= yEnd - iteration * 2) {
-      flip(position);
+    while (position[1] < range) {
       move(down);
+      flip(position);
     }
-    count++;
 
-    if (count === n) {
-      pathfinding = false;
-      break;
-    }
+    count++;
+    if (count === n) break;
 
     //go left
-    while (position[0] !== xStart + iteration * 2) {
-      flip(position);
+    while (position[0] > start) {
       move(left);
-    }
-    count++;
-
-    if (count === n) {
-      pathfinding = false;
-      break;
-    }
-
-    //go back up
-    console.log(position);
-    while (Math.round(position[1] / 2) - 1 !== yStart + iteration) {
       flip(position);
-      move(up);
     }
     count++;
+    if (count === n) break;
 
-    if (count === n) {
-      pathfinding = false;
-      break;
+    start += 2;
+    range -= 2;
+
+    // go back up
+    while (position[1] > start) {
+      move(up);
+      flip(position);
     }
-    iteration++;
+    count++;
+    if (count === n) break;
   }
-  console.log(count);
-  console.log(board);
 
   return board;
 };
