@@ -45,7 +45,7 @@ const spiralize = n => {
   const left = ([x, y]) => [x - 1, y];
   const up = ([x, y]) => [x, y - 1];
   const down = ([x, y]) => [x, y + 1];
-  const flip = ([x, y]) => (board[y][x] = '*');
+  const flip = ([x, y]) => (board[y][x] = 1);
 
   const drawLine = dir => {
     move(dir);
@@ -88,3 +88,6 @@ const spiralize = n => {
 
   return board;
 };
+
+//test
+console.table(spiralize(10));
