@@ -38,9 +38,14 @@ If you finished this kata, you might want to continue with Sortable Poker Hands
 
 */
 
-const Result = { "win": 1, "loss": 2, "tie": 3 }
+var Result = { "win": 1, "loss": 2, "tie": 3 }
+let hand1;
+let hand2;
+let len = 0;
+let count = 0;
 
-const PokerHand = hand => {
+
+const tallyScore = hand => {
   hand = hand.split(' ');
 
   const handValues = hand.map(item => {
@@ -59,9 +64,32 @@ const PokerHand = hand => {
   hand = handValues;
   const cardNumbers = hand.map(i => i[0]).sort((a, b) => a - b);
   const cardSuits = hand.map(i => i[1]).sort();
-  const highCard = cardNumbers[cardNumbers.length - 1];
+  const highCard = cardNumbers => cardNumbers[cardNumbers.length - 1];
+  let handScore = 1;
+  let pairScore1 = 0;
+  let pairScore2 = 0;
+  const formatScore = score => score < 10 ? `0${score}` : `${score}`;
 
-  console.log(cardNumbers);
+  const findMatches = () => {
+    const matches = [];
+    for (let i = 2; i < 15; i++) {
+      let filter = cardNumbers.filter(num => num === i);
+      if (filter.length > 1) {
+        matches.push(filter);
+      } 
+    }
+    matches.push([]); // to compare length of matches[1] (can't if undefined!)
+    matches.push([]);
+
+    if (matches.length === 3) {
+      pairScore1 = Math.max(...matches[0]);
+    } else if (matches.length > 3) {
+      pairScore2 = Math.max(...matches[1]);
+    }
+
+    return matches;
+  }
+  const matches = findMatches();
 
   const isStraight = () => {
     for (let i = 1; i < cardNumbers.length; i++) {
@@ -69,52 +97,70 @@ const PokerHand = hand => {
         return false;
       }
     }
+
     return true;
   }
 
   const isFlush = () => cardSuits.every(a => a === cardSuits[0]);
-
-  const isRoyalFlush = () => {
-    if (isStraight() && isFlush() && highCard === 14) {
-        return true;
-    }
-  }
-
-  const isStraightFlush = () => {
-    if (isStraight() && isFlush() && highCard !== 14) {
-        return true;
-    }
-  }
-
-  const findMatches = () => {
-    const matches = [];
-    for (let i = 0; i < 14; i++) {
-      let filter = cardNumbers.filter(num => num === i);
-      if (filter.length > 1) {
-        matches.push(filter);
-      } 
-    }
-    return matches;
-  }
-
-  const matches = findMatches();
+  const isRoyalFlush = () => isStraight() && isFlush() && highCard === 14;
+  const isStraightFlush = () => isStraight() && isFlush() && highCard !== 14;
   const isFullHouse = () => matches[0].length + matches[1].length === 5;
   const isTwoPair = () => matches[0].length + matches[1].length === 4;
   const isFourKind = () => matches[0].length === 4;
-  const isThreeKind = () => matches[0].length === 3 && matches.length === 1;
-  const isPair = () => matches[0].length === 2 && matches.length === 1;
+  const isThreeKind = () => matches[0].length === 3 && matches.length === 3;
+  const isPair = () => matches[0].length === 2 && matches.length === 3;
 
-  console.log(isFullHouse());
-  console.log(isTwoPair());
-  console.log(isFourKind());
-  console.log(isThreeKind());
-  console.log(isPair());
+  if (isRoyalFlush()) handScore += 9
+  else if (isStraightFlush()) handScore += 8
+  else if (isFourKind()) handScore += 7
+  else if (isFullHouse()) handScore += 6
+  else if (isFlush()) handScore += 5
+  else if (isStraight()) handScore += 4
+  else if (isThreeKind()) handScore += 3
+  else if (isTwoPair()) handScore += 2
+  else if (isPair()) handScore += 1
 
-  const isHighCard = () => {}
+  const cardNumberSequenceScore = (cardNumbers) => {
+    return cardNumbers.map(n => {
+      n = formatScore(n);
+      return n;
+    }).reverse().join('');
+  };
+  console.log(cardNumberSequenceScore(cardNumbers));
+  const totalScore = parseInt(`${formatScore(handScore)}${formatScore(pairScore1)}${formatScore(pairScore2)}${cardNumberSequenceScore(cardNumbers)}`);
+
+  return totalScore;
 }
 
-PokerHand('KS KH KC JD JD');
+function PokerHand(hand) {
+  len += hand.length
+  if (count) {
+    hand2 = hand;
+    count = 0;
+  } else {
+    hand1 = hand;
+    count++;
+  }
+}
 
-// PokerHand.prototype.compareWith = function(hand){
-//     return Result.tie;
-// }
+PokerHand.prototype.compareWith = function(hand){
+  const score1 = tallyScore(hand1);
+  const score2 = tallyScore(hand2);
+  console.log(hand1);
+  console.log(score1);
+  console.log(hand2);
+  console.log(score2);
+  console.log(score1 > score2)
+  console.log('next');
+  
+  if (score1 > score2) {
+    len = 0;
+    return Result.win;
+  } else if (score1 === score2) {
+    len = 0;
+    return Result.tie;
+  } else {
+    len = 0;
+    return Result.loss;
+  }
+}
