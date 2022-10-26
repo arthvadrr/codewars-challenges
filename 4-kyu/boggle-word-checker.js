@@ -29,8 +29,8 @@ const checkWord = (board, word) => {
   const yBounds     = board.length - 1;
   const wordArr     = word.split('');
   const firstLetter = wordArr[0];
-  const startPoints = [];
-  const move        = (dir)       => path.push(dir(path[path.length - 1]));
+  const pointMatrix = [[]];
+  const move        = (dir, from)       => dir(from);
   const right       = ([x, y])    => [x + 1, y];
   const down        = ([x, y])    => [x, y + 1];
   const left        = ([x, y])    => [x - 1, y];
@@ -43,54 +43,87 @@ const checkWord = (board, word) => {
   
   const dirArr  = [right, rightDown, down, leftDown, left, upLeft, up, upRight];
 
-  const findStartingPoints = (board) => {
+  const findStartingPoints = () => {
     for (let r = 0; r < board.length; r++) {
       for (let c = 0; c < board[r].length; c++) {
         let pos = board[r][c];
-        if (firstLetter === pos) startPoints.push([r, c]); 
+        if (firstLetter === pos) pointMatrix[0].push([r, c]); 
       }
     }
-    wordArr.shift();
   }
-
-  const addNextPath = (currentLetter) => {
+  
+  const findNextPositions = (pos, letter) => {
+    let next = [];
     for (let d = 0; d < dirArr.length; d++) {
-      move(dirArr[d]);
-      let p = path[path.length - 1];
-
-      if (isInBounds(p) && currentLetter === board[p[0]][p[1]]) {
-        return true;
-      }
-
-      path.pop();
+      let p = move(dirArr[d], pos);
+      if (!isInBounds(p)) continue;
+      if (board[p[0]][p[1]] === letter) next.push(p);
     }
+    return next;
+  }
+
+  const posExists = (arr, origin) => {
+    let exists = false;
+    origin.forEach(i => {
+      if (i[0] === arr[0] && i[1] === arr[1]) exists = true;
+    })
+    return exists;
+  }
+
+  console.table(board);
+  const getNextLetterArr = () => {
+    for (let l = 1; l < wordArr.length; l++) {
+      let letterArr = [];
+
+      if (pointMatrix[l - 1]) {
+        for (let p = 0; p < pointMatrix[l - 1].length; p++) {
+          let posArr = findNextPositions(pointMatrix[l - 1][p], wordArr[l])
+          posArr.forEach(i => {
+            if (!posExists(i, letterArr)) letterArr.push(i)
+          });
+        }
+      }
+      if (letterArr.length) {
+        pointMatrix.push(letterArr);
+      }
+    }
+  }
+
+  const isWithinRange = (pos1, pos2) => {
+    if (!isInBounds(pos1) || !isInBounds(pos2)) return false;
+    const rangeX = [pos1[0] - 1, pos1[0], pos1[0] + 1];
+    const rangeY = [pos1[1] - 1, pos1[1], pos1[1] + 1];
+
+    if (rangeX.includes(pos2[0]) && rangeY.includes(pos2[1])) return true;
     return false;
   }
 
-  const iterateThroughLetters = () => {
-    for (let l = 0; l < wordArr.length; l++) {
-      while(addNextPath(wordArr[l])) {
-        if (path.length === wordArr.length + 1) return true;
+  const isCollision = (path, pos) => path.includes(pos);
+
+  const canDrawPath = () => {
+    const letters = word.split('').reverse();
+    const paths = pointMatrix.reverse();
+    let path = [paths[0][0]];
+
+    for (let l = 1; l < letters.length; l++) {
+      for (let p = 0; p < paths[l].length; p++) {
+        let current = paths[l][p];
+        let previous = path[path.length - 1];
+        if (isWithinRange(previous, current) && 
+        !isCollision(previous, current)) path.push(current);
       }
     }
+    if (path.length === letters.length) return true;
     return false;
   }
-
-  const iterateThroughStartingPoints = () => {
-    for (let s = 0; s < startPoints.length; s++) {
-      path = [startPoints[s]];
-      if (iterateThroughLetters()) {
-        return true;
-      }
-    }
-    return false;
-  }
-
-  findStartingPoints(board);
-
-  if (startPoints.length > 0 && wordArr.length === 0) return true;
-
-  return iterateThroughStartingPoints();
+  
+  findStartingPoints();
+  if (wordArr.length === 0 && pointMatrix.length > 0) return true;
+  getNextLetterArr();
+  if (pointMatrix.length !== word.split('').length) return false;
+  console.log(word);
+  console.log(canDrawPath());
+  return canDrawPath();
 }
 
 const testBoard = [
@@ -103,7 +136,8 @@ const testBoard = [
 checkWord( testBoard, "C" ) 
 checkWord( testBoard, "EAR" ) 
 checkWord( testBoard, "EARS" )
-checkWord( testBoard, "BAILER" ) 
+checkWord( testBoard, "BAILER" )
+checkWord( testBoard, "fkkk"); 
 checkWord( testBoard, "RSCAREIOYBAILNEA" )
 checkWord( testBoard, "CEREAL" )
 checkWord( testBoard, "ROBES" )
