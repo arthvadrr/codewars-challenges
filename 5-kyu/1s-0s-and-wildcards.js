@@ -19,19 +19,37 @@ Have fun!
 */
 
 const possibilities = (str) => {
-  const qs = str.match(/\?/g);
-  const zeros = qs.map(n => 0);
-  let iterationCount = zeros.length;
-  let count = 0;
-
-  for (let i = 0; i < iterationCount; i++) {
-   count += i; 
+  const arr = [];
+  const str2 = str.replace(/\?/g, 0).split('');
+  const indices = [];
+  let index = str.indexOf('?');
+  
+  while (index !== -1) {
+    indices.push(index);
+    index = str.indexOf('?', index + 1);
   }
 
-  console.log(count);
+  arr.push(str2);
+  console.log(arr);
+  let r = 0;
+  let i = 0
+  let l = indices.length;
+  for (let s = 0; s < l * l - 1; s++) {
+      r = r  === 0 ? 1 : 0;
+      i = i === indices.length - 1 ? 0 : i += 1; 
+      const arrr = str.replace(/\?/g, r).split('');
+      arrr[indices[i]] = r
+      arr.push(arrr);
+      i++;
+  }
+
+  //this is a change
+  
+  console.log(arr.map(i => i.join('')))
+  return arr.map(i => i.join(''));
+
 }
 
-possibilities('101?'); //2
-possibilities('1?1?'); //4
-possibilities('1???'); //6 1111 1011 1001 1010 1101 1100
-possibilities('????'); //1111 0111 1011 1101 1110 0000 1000 0100 0010 0001 
+ possibilities('101?'); // 3
+ possibilities('1?1?'); // 00 01 10 11
+// possibilities('0?0?0?1?'); // 000 100 010 001 110 101 001 010 111
