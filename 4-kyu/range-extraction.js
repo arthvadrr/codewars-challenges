@@ -15,30 +15,31 @@ solution([-10, -9, -8, -6, -3, -2, -1, 0, 1, 3, 4, 5, 7, 8, 9, 10, 11, 14, 15, 1
 */
 
 const solution = list => {
-  const arr = [];
-  
-  for (let i = 0; i < list.length; i++) {
-    let rangeArr = [list[i]];
-    let rangeIndex = i + 1;
-    let rangeLength = 1;
-    
-    while (list[i] + rangeLength === list[rangeIndex]) {
-      rangeArr.push(list[rangeIndex]);
-      rangeLength++;
-      rangeIndex++;
+    const arr = [];
+
+    for (let i = 0; i < list.length; i++) {
+        let rangeArr = [list[i]];
+        let rangeIndex = i + 1;
+        let rangeLength = 1;
+
+        while (list[i] + rangeLength === list[rangeIndex]) {
+            rangeArr.push(list[rangeIndex]);
+            rangeLength++;
+            rangeIndex++;
+        }
+
+
+        //reset range-check and increment i to the end of the range
+        rangeLength = 1;
+        rangeIndex = i + 1;
+        i = i + rangeArr.length - 1;
+
+        if (rangeArr.length > 2) {
+            arr.push(`${rangeArr[0]}-${rangeArr[rangeArr.length - 1]}`);
+        } else {
+            rangeArr.forEach(item => arr.push(item.toString()));
+        }
     }
 
-    //reset range-check and increment i to the end of the range
-    rangeLength = 1;
-    rangeIndex = i + 1;
-    i = i + rangeArr.length - 1;
-    
-    if (rangeArr.length > 2) {
-      arr.push(`${rangeArr[0]}-${rangeArr[rangeArr.length - 1]}`);
-    } else {
-      rangeArr.forEach(item => arr.push(item.toString()));
-    }
-  }
-  
-  return arr.join(',');
+    return arr.join(',');
 }
