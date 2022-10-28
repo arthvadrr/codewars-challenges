@@ -40,18 +40,18 @@ const checkWord = (board, word) => {
   const upLeft      = ([x, y])    => [x - 1, y - 1];
   const upRight     = ([x, y])    => [x + 1, y - 1];
   const isInBounds = ([x, y]) => x >= 0 && x <= xBounds && y >= 0 && y <= yBounds;
-  
+
   const dirArr  = [right, rightDown, down, leftDown, left, upLeft, up, upRight];
 
   const findStartingPoints = () => {
     for (let r = 0; r < board.length; r++) {
       for (let c = 0; c < board[r].length; c++) {
         let pos = board[r][c];
-        if (firstLetter === pos) pointMatrix[0].push([r, c]); 
+        if (firstLetter === pos) pointMatrix[0].push([r, c]);
       }
     }
   }
-  
+
   const findNextPositions = (pos, letter) => {
     let next = [];
     for (let d = 0; d < dirArr.length; d++) {
@@ -109,14 +109,14 @@ const checkWord = (board, word) => {
       for (let p = 0; p < paths[l].length; p++) {
         let current = paths[l][p];
         let previous = path[path.length - 1];
-        if (isWithinRange(previous, current) && 
+        if (isWithinRange(previous, current) &&
         !isCollision(previous, current)) path.push(current);
       }
     }
     if (path.length === letters.length) return true;
     return false;
   }
-  
+
   findStartingPoints();
   if (wordArr.length === 0 && pointMatrix.length > 0) return true;
   getNextLetterArr();
@@ -133,11 +133,11 @@ const testBoard = [
   ["B","Y","O","R"]
 ];
 
-checkWord( testBoard, "C" ) 
-checkWord( testBoard, "EAR" ) 
+checkWord( testBoard, "C" )
+checkWord( testBoard, "EAR" )
 checkWord( testBoard, "EARS" )
 checkWord( testBoard, "BAILER" )
-checkWord( testBoard, "fkkk"); 
+checkWord( testBoard, "fkkk");
 checkWord( testBoard, "RSCAREIOYBAILNEA" )
 checkWord( testBoard, "CEREAL" )
 checkWord( testBoard, "ROBES" )
