@@ -31,7 +31,16 @@ const allBitCombinations = size => {
 }
 
 //careful what you pass here
-allBitCombinations(3);
+//allBitCombinations(2);
+
+const getBits = len => {
+  const arr = [];
+  for (let i = 0; i < Math.pow(2, len); i++) arr.push(i.toString(2).padStart(len, '0'))
+  return arr;
+}
+
+console.log('bitlen');
+console.log(getBits(6));
 
 /*
 Size of 3
