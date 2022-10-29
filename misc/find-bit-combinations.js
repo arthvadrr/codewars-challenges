@@ -33,6 +33,8 @@ const allBitCombinations = size => {
 //careful what you pass here
 //allBitCombinations(2);
 
+
+// Shorter solution...toString can use radix on a number!
 const getBits = len => {
   const arr = [];
   for (let i = 0; i < Math.pow(2, len); i++) arr.push(i.toString(2).padStart(len, '0'))

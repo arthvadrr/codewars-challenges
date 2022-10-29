@@ -19,8 +19,7 @@ Have fun!
 */
 
 const possibilities = (str) => {
-  const arr = [];
-  const str2 = str.replace(/\?/g, 0).split('');
+  const result = [];
   const indices = [];
   let index = str.indexOf('?');
   
@@ -28,91 +27,26 @@ const possibilities = (str) => {
     indices.push(index);
     index = str.indexOf('?', index + 1);
   }
+
+  const getPos = len => {
+    const arr = [];
+    for (let i = 0; i < Math.pow(2, len); i++) arr.push(i.toString(2).padStart(len, '0'))
+    return arr;
+  }
+
+  const combos = getPos(indices.length);
+
+  combos.forEach(combo => {
+    let s = str.split('');
+    let c = combo.split('');
+
+    for (let i = 0; i < c.length; i++) s[indices[i]] = c[i];
+    result.push(s.join(''));
+  });
+  console.log(result);
+  return result;
 }
 
- possibilities('101?'); // 3
- possibilities('1?1?'); // 00 01 10 11
-// possibilities('0?0?0?1?'); // 000 100 010 001 110 101 001 010 111
-
-
-
-
-
-
-
-
-
-
-
-const findStuff (size) => {
-  const Possibilities = Math.pow(size, size);
-  
-}
-
-/*
-Size of 3
-
-
-Size of 4
-[?, ?, ?, ?]
-[[0,1],[[0,1],[[0,1],[[0,1]];
-2 * 2 * 2 * 2
-2   4   8   16
-
-//4
-3,2,3,2
-1,2,3,2
-0,2,3,2
-1,2,3,2
-
-//3
-2, 1, 2, 1, 
-0, 2, 1, 2
-
-//2
-1, 0, 1, 0
-
-// 4
-3. 0001
-2. 0011
-1. 0010
-4. 0000
-5. 0100
-6. 0110
-7. 0111
-8. 0101
-9. 1101
-10. 1111
-11. 1110
-12. 1100
-13. 1000
-14. 1010
-15. 1011
-16. 1001
-
-// 3 ... 2 ^ 3 = 8
-1. 001
-2. 011
-3. 010
-4. 000
-5. 100
-6. 101
-7. 111
-8. 110
-
-//3 ... 2 ^ 2 = 4
-
-1. 01
-2. 11
-3. 10
-4. 00
-
-
-
-
-
-
-
-
-
-*/
+//  possibilities('101?'); // 3
+//   possibilities('1?1?'); // 00 01 10 11
+  possibilities('0?0?0?1?'); // 000 100 010 001 110 101 001 010 111
