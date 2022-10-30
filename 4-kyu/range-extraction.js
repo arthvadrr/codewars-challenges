@@ -43,3 +43,5 @@ const solution = list => {
 
     return arr.join(',');
 }
+
+console.log(solution([1, 2, 3]))
