@@ -2,6 +2,7 @@
 https://www.codewars.com/kata/59b9a92a6236547247000110/train/javascript
 
 As a secret agent, you need a method to transmit a message to another secret agent. But an encrypted text written on a notebook will be suspicious if you get caught. A simple deck of playing cards, however, is everything but suspicious...
+aaa
 
 With a deck of 52 playing cards, there are 52! different possible permutations to order it. And 52! is equal to 80658175170943878571660636856403766975289505440883277824000000000000. That's a number with 68 digits!
 
