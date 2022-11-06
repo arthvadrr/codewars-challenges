@@ -68,16 +68,8 @@ const multiplicationTable2 = (q, p) => {
   return Array.from({length: Math.abs(m - n) + 1}, a => Array.from({length: m++}, (a, i) => `${i + 1} * ${m - 1} = ${(i + 1) * (m - 1)}${i === m ? '' : '  '}`).join('')).sort((x, y) => q > p ? y.length - x.length : x.length - y.length).join('\n');
 }
 
-console.time('arth');
+console.time('t');
 const multiplicationTable=(n,t,l=(n>t?t:n),e=(n>t?n:t))=>Array.from({length:Math.abs(l-e)+1},n=>Array.from({length:l++},(n,t)=>`${t+1} * ${l-1} = ${(t+1)*(l-1)}`).join("  ")).sort((l,e)=>n>t?e.length-l.length:l.length-e.length).join("\n")
-console.timeEnd('arth');
-
-'\'1 * 1 = 1\\n1 * 2 = 2  2 * 2 = 4\''
-'\'\\\\1 * 1 = 1  \\n\\\\1 * 2 = 2  \\\\2 * 2 = 4  \''
-
+console.timeEnd('t');
 console.log(multiplicationTable(1, 9));
 //console.log(multiplicationTable(2, 5))
-
-Expected: 
-'\'1 * 3 = 3  2 * 3 = 6  3 * 3 = 9\\n1 * 2 = 2  2 * 2 = 4\\n1 * 1 = 1\''
-'\'1 * 3 = 3  2 * 3 = 6  3 * 3 = 9\\n1 * 1 = 1\''
