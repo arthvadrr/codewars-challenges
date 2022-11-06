@@ -72,4 +72,4 @@ console.time('t');
 const multiplicationTable=(n,t,l=(n>t?t:n),e=(n>t?n:t))=>Array.from({length:Math.abs(l-e)+1},n=>Array.from({length:l++},(n,t)=>`${t+1} * ${l-1} = ${(t+1)*(l-1)}`).join("  ")).sort((l,e)=>n>t?e.length-l.length:l.length-e.length).join("\n")
 console.timeEnd('t');
 console.log(multiplicationTable(1, 9));
-//console.log(multiplicationTable(2, 5))
+console.log(multiplicationTable(2, 5))
