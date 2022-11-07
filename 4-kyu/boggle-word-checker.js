@@ -130,7 +130,6 @@ checkWord( testBoard, "C" )
 checkWord( testBoard, "EAR" )
 checkWord( testBoard, "EARS" )
 checkWord( testBoard, "BAILER" )
-checkWord( testBoard, "fkkk");
 checkWord( testBoard, "RSCAREIOYBAILNEA" )
 checkWord( testBoard, "CEREAL" )
 checkWord( testBoard, "ROBES" )
