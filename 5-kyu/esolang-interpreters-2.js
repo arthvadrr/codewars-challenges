@@ -44,53 +44,6 @@ NOTE: The pointer of the interpreter always starts from the first (leftmost) cel
 
 Good luck :D
 */
-
-//working
-const interpreterWorking = (code, tape) => {
-  //Empty loops are not allowed
-  code = code.replace('[]', '');
-  
-  let c = code.split('');
-  let t = tape.split('');
-  let pos = 0;
-  
-
-  const flip  = () => t[pos] = t[pos] === '0' ? '1' : '0';
-  const right = () => pos += 1;
-  const left  = () => pos -= 1;
-  
-  const getLoopClosePos = i => {
-    let block = 0;
-    for (; i < c.length; i++) {
-      if (c[i] === ']') block--;
-      if (c[i] === '[') block++;
-      if (block === 0) return i;
-    }
-  }
-  
-  const getLoopOpenPos = i => {
-    let block = 0;
-    for (;i > -1; i--) {
-      if (c[i] === '[') block--;
-      if (c[i] === ']') block++;
-      if (block === 0) return i;
-    }
-  }
-
-  for (let i = 0; i < c.length; i++) {
-    if (pos > t.length - 1 || pos < 0) break;
-    switch (c[i]) {
-      case '*': flip();  break;
-      case '>': right(); break;
-      case '<': left();  break;
-      case '[': if (t[pos] === '0') i = getLoopClosePos(i); break;
-      case ']': if (t[pos] !== '0') i = getLoopOpenPos(i);  break;
-    }
-  }
-  return t.join('')
-}
-
-
 const interpreter = (code, tape) => {
   // Create arrays from strings
   let c = code.split('');
