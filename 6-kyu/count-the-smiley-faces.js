@@ -32,13 +32,7 @@ const PREcountSmileys = (arr) => {
     return count;
 }
 
-
-////countSmileys=(i, r=new RegExp(/(;|:)(-|~|)(\)|((D)|\[))/g))=>{
-//    const thing = i[0];
-//    console.log(thing)
-//}
-
-countSmileys = (i, r = new RegExp(/(;|:)(-|~|)(\)|((D)|\[))/g)) => i.reduce((a, b) => +r.test(b) + a, 0)
+/*one liner*/countSmileys = (i, r = new RegExp(/(;|:)(-|~|)(\)|((D)|\[))/g)) => i.reduce((a, b) => +r.test(b) + a, 0)
 
 console.log(countSmileys([]))
 console.log(countSmileys([':D', ':~)', ';~D', ':)']))

@@ -15,4 +15,4 @@ Find the unique number (this kata)
 Find the unique string
 Find The Unique
 */
-findUniq=(a,b=(a.filter((c,d)=>a.indexOf(c)!==d)))=>a.filter(e=>e!==b[0])[0]
+const findUniq=(a,b=(a.filter((c,d)=>a.indexOf(c)!==d)))=>a.filter(e=>e!==b[0])[0]

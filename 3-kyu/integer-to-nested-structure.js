@@ -130,12 +130,12 @@ function decode(n) {
   
 }
 
-//console.log(encode(46), 'expected 185');
-//console.log(encode(3), 'expected 1');
-//console.log(encode(4), 'expected 2');
-//console.log(encode(5), 'expected 3');
-//console.log(encode(6), 'expected 5');
-//console.log(encode(7), 'expected 6');
-//console.log(encode(8), 'expected 10');
+console.log(encode(46), 'expected 185');
+console.log(encode(3), 'expected 1');
+console.log(encode(4), 'expected 2');
+console.log(encode(5), 'expected 3');
+console.log(encode(6), 'expected 5');
+console.log(encode(7), 'expected 6');
+console.log(encode(8), 'expected 10');
 console.log(encode(9), 'expected 25');
-//console.log(encode(10), 'expected 11');;
+console.log(encode(10), 'expected 11');
