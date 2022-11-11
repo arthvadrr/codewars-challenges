@@ -13,5 +13,5 @@ Examples
 ""  -->  ""
 */
 
-order=w=>w.split(' ').sort((a,b,r=/\d/)=>a.match(r)-b.match(r)).join(' ');
+const order=w=>w.split(' ').sort((a,b,r=/\d/)=>a.match(r)-b.match(r)).join(' ');
 console.log(order("is2 Thi1s T4est 3a"));

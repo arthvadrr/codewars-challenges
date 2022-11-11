@@ -32,23 +32,23 @@ const interpreter = (instructions, token) => {
 
   return token_arr.join('')
 }
-
-console.time('len5')
+ 
+console.time('t1')
 console.log(`Result: ${interpreter('[*>[>*>]>]', '11001')}; Expected: 01100`)
-console.timeEnd('len5')
+console.timeEnd('t1')
 console.log('\n')
 
-console.time('len8')
+console.time('t2')
 console.log(`Result: ${interpreter('*>*>*>*>*>*>*>*', '00101100')}; Expected: 11010011`)
-console.timeEnd('len8')
+console.timeEnd('t2')
 console.log('\n')
 
-console.time('len8')
+console.time('t3')
 console.log(`Result: ${interpreter('>>>>>*<*<<*', '00101100')}; Expected: 00000000`)
-console.timeEnd('len8')
+console.timeEnd('t3')
 console.log('\n')
 
-console.time('len8')
+console.time('t4')
 console.log(`Result: ${interpreter("*>*>>*>>>*>*", '00101100')}; Expected: 11111111`)
-console.timeEnd('len8')
+console.timeEnd('t4')
 console.log('\n')

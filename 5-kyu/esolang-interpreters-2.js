@@ -95,3 +95,8 @@ console.time('5');
 console.log(interpreter('[*>[>*>]>]', '11001'))
 console.timeEnd('5');
 console.log('should be', '01100');
+
+console.time('5');
+console.log(interpreter('[[*>]*]', '10101100'))
+console.timeEnd('5');
+console.log('should be', '?');
