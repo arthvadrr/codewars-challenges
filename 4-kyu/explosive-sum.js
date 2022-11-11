@@ -43,8 +43,8 @@ const sum = num => {
   return res[num];
 }
 
-//console.log(num(1), '1');
-//console.log(num(2), '2');
-//console.log(num(3), '3');
+console.log(num(1), '1');
+console.log(num(2), '2');
+console.log(num(3), '3');
 console.log(sum(4), '4');
-//console.log(num(5), '5')
+console.log(num(5), '5')

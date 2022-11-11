@@ -124,8 +124,6 @@ function encode(n) {
   return f;
 }
 
-[[[ ]],[]]
-
 function decode(n) {
   
 }
