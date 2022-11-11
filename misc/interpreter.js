@@ -33,25 +33,6 @@ const interpreter = (instructions, token) => {
   return token_arr.join('')
 }
 
-// const jump = (code, count, i) => count && code[i] !== undefined
-//   ? jump(code, count + ([1, 0, -1][code.charCodeAt(i) - 91] ?? 0), i + Math.sign(count))
-//   : i;
-
-// const interpreter = (code, tape) => {
-//   tape = [].map.call(tape, c => +c);
-//   let [memoryPointer, instructionPointer] = [0, 0];
-//   const instructions = {
-//     '<': () => --memoryPointer,
-//     '>': () => ++memoryPointer,
-//     '*': () => tape[memoryPointer] ^= 1,
-//     ']': () => instructionPointer = tape[memoryPointer] ? jump(code, -1, instructionPointer - 1) + 1 : instructionPointer,
-//     '[': () => instructionPointer = !tape[memoryPointer] ? jump(code, 1, instructionPointer + 1) - 1 : instructionPointer,
-//   };
-//   for (; instructionPointer < code.length && tape[memoryPointer] !== undefined; ++instructionPointer)
-//     (instructions[code[instructionPointer]] ?? (() => {}))();
-//   return tape.join('');
-// }
-
 console.time('len5')
 console.log(`Result: ${interpreter('[*>[>*>]>]', '11001')}; Expected: 01100`)
 console.timeEnd('len5')
