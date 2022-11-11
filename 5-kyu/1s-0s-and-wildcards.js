@@ -47,6 +47,6 @@ const possibilities = (str) => {
   return result;
 }
 
-//  possibilities('101?'); // 3
-//   possibilities('1?1?'); // 00 01 10 11
+  possibilities('101?'); // 3
+  possibilities('1?1?'); // 00 01 10 11
   possibilities('0?0?0?1?'); // 000 100 010 001 110 101 001 010 111
