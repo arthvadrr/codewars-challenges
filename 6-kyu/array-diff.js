@@ -12,15 +12,15 @@ If a value is present in b, all of its occurrences must be removed from the othe
 arrayDiff([1,2,2,2,3],[2]) == [1,3]
 */
 
-const arrayDiff = (a, b) => {
+const arrayDiffVeryFast = (a, b) => {
   let res = Array.from(a);
   b.forEach(d => res = res.filter(e => e !== d))
   return res;
 }
 
-console.log(arrayDiff([1,2], [1])," [2], a was [1,2], b was [1]");
-console.log(arrayDiff([1,2,2], [1])," [2,2], a was [1,2,2], b was [1]");
-console.log(arrayDiff([1,2,2], [2]), "[1], a was [1,2,2], b was [2]");
-console.log(arrayDiff([1,2,2], []), "[1,2,2], a was [1,2,2], b was []");
-console.log(arrayDiff([], [1,2])," [], a was [], b was [1,2]");
-console.log(arrayDiff([1,2,3], [1,2])," [3], a was [1,2,3], b was [1,2]")
+console.log(arrayDiffVeryFast([1,2], [1])," [2], a was [1,2], b was [1]");
+console.log(arrayDiffVeryFast([1,2,2], [1])," [2,2], a was [1,2,2], b was [1]");
+console.log(arrayDiffVeryFast([1,2,2], [2]), "[1], a was [1,2,2], b was [2]");
+console.log(arrayDiffVeryFast([1,2,2], []), "[1,2,2], a was [1,2,2], b was []");
+console.log(arrayDiffVeryFast([], [1,2])," [], a was [], b was [1,2]");
+console.log(arrayDiffVeryFast([1,2,3], [1,2])," [3], a was [1,2,3], b was [1,2]")
