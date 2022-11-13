@@ -28,21 +28,13 @@ So, you should expect these inputs and outputs:
 const awesomePhrase = 'Should work, dangit!';
 
 const isInteresting = (num, phrases) => {
-  console.log(`
-  num: ${num}
-  phrases: ${phrases}
-  `);
-
-  let res = 0;
-
-  const has_interesting_numbers = num => {
-    let res = false;
+    let res = 0;
 
     const is_followed_by_all_zeros = num => {
       let res = true;
       
       const numArr = num.toString().split('')
-        if (!numArr[0] > 0) return !res;
+        if (numArr.length < 3) return false;
         for (let i = 1; i < numArr.length; i++) {
           if (numArr[i] !== '0') {
             res = false;
@@ -55,6 +47,9 @@ const isInteresting = (num, phrases) => {
     const is_all_same_num = num => {
       let res = true;
       const numArr = num.toString().split('');
+
+      if (numArr.length < 2) return false;
+
       let base = numArr[0];
 
       numArr.forEach(n => {
@@ -66,13 +61,14 @@ const isInteresting = (num, phrases) => {
     const is_sequential = num => {
       const numArr = num.toString().split('');
       const numArrInts = numArr.map(n => parseInt(n));
-      console.log(`numarrints ${numArrInts}`)
-      // Make sure array is in ascending order
+      if (numArrInts.length < 2) return false;
+      // remove last ?.zero before checking sequence
       if (
         numArrInts[numArrInts.length - 1] === 0 &&
         numArrInts?.[numArrInts.length - 2] === 9
         ) numArrInts.pop();
-
+        
+        // Make sure array is in ascending order
       if (numArrInts[0] > numArrInts[numArrInts.length - 1]) numArrInts.reverse();
 
       const check_sequence = arr => {
@@ -84,26 +80,57 @@ const isInteresting = (num, phrases) => {
       
       return check_sequence(numArrInts);
     }
-    console.log(`is sequential 12345? ${is_sequential(12340)}`); 
+
+    const is_palindrome = num => {
+      let res = false;
+      const numArr = num.toString().split('');
+
+      if (numArr.length < 2) return false;
+
+      const first = numArr.slice(0, Math.floor(numArr.length / 2));
+      const last = numArr.slice(Math.ceil(numArr.length / 2));
+      first.reverse();
+
+      if (first.join('') === last.join('')) res = true;
+      return res;
+    }
+
+    const is_awesome_phrase = num => phrases.includes(num);
+
+    const is_interesting = num => {
+      if (num < 100) return false;
+      if (
+        is_followed_by_all_zeros(num) ||
+        is_all_same_num(num) ||
+        is_sequential(num) ||
+        is_palindrome(num) ||
+        is_awesome_phrase(num)
+      ) return true;
+      return false;
+    }
+
+    const is_upcoming_interesting = num => {
+      if (
+        is_interesting(num + 1) ||
+        is_interesting(num + 2)
+      ) return true;
+      return false;
+    }
+
+    if (is_interesting(num)) {
+      res = 2;
+    } else if (is_upcoming_interesting(num)) {
+      res = 1;
+    }
 
     return res;
-  }
-
-  const has_upcoming_interesting_numbers = num => {
-    let res = false;
-    let range = 2;
-    return res;
-  }
-
-  if (has_interesting_numbers(num)) res = 2
-  if (has_upcoming_interesting_numbers(num)) res = 1
-
-  return res;
 }
 
-console.log(isInteresting(3, [1337, 256]),     '0');
+// console.log(isInteresting(1, [1337, 256]),     '0');
 // console.log(isInteresting(1336, [1337, 256]),  '1');
 // console.log(isInteresting(1337, [1337, 256]),  '2');
 // console.log(isInteresting(11208, [1337, 256]), '0');
 // console.log(isInteresting(11209, [1337, 256]), '1');
 // console.log(isInteresting(11211, [1337, 256]), '2');
+
+console.log(isInteresting(30, []), '0')
