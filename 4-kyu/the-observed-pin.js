@@ -38,6 +38,7 @@ const getPINs = observed => {
     [0, "0", 0]
   ];
 
+  // Get the position of the digit from the keypad
   const getPos = str => {
     for (let a = 0; a < keypad.length; a++) {
       for (let b = 0; b < keypad[a].length; b++) {
@@ -46,6 +47,7 @@ const getPINs = observed => {
     }
   }
 
+  // Functions to get the values of the adjacent keys 
   const getVal = ([x, y]) => keypad?.[x]?.[y]
   const up     = ([x, y]) => [x - 1, y];
   const down   = ([x, y]) => [x + 1, y];
@@ -53,6 +55,7 @@ const getPINs = observed => {
   const right  = ([x, y]) => [x, y + 1];
   const deltas = [up, down, left, right];
 
+  // Store adjacent values
   for (let a = 0; a < observedArr.length; a++) {
     let pos = getPos(observedArr[a]);
     observedMatrix[a].push(getVal(pos));
@@ -65,38 +68,47 @@ const getPINs = observed => {
     }
   }
 
-  console.log(observedMatrix)
-
-  let code = [];
+  // We now need an engine to iterate through all possible values, based decrementing each array's length
   const lens = [];
   observedMatrix.forEach(a => lens.push(a.length - 1));
   const engine = Array.from(lens);
   
-  console.log(Math.max(...engine));
+  // Get the stored value at given position (engine arr) and build the combo string
+  const getDigit = i => observedMatrix[i][engine[i]];
+  const getCombo = (combo = '') => {
+    for (let i = 0; i < observedMatrix.length; i++) {
+      combo += getDigit(i)
+    }
+    return combo;
+  }
   
-  while (Math.max(...engine)) {
+  // Iterate over the combos and push to result (res)
+  let iterating = true;
+  while (iterating) {
     const i = lens.length - 1;
     let shift = 0;
     
-    //this works dont fuking touch it
-    while(engine[i] > -1) {
-      console.log(engine);
+    while (engine[i] > 0) {
+      res.push(getCombo());
       engine[i]--;
     }
+    res.push(getCombo());
 
-    while (engine[i - shift] === 0) {
-      shift++;
+    if (Math.max(...engine) === 0) {
+      iterating = false;
+      break;
     }
     
+    while(engine[i - shift] === 0 && shift < i) shift++;
+    engine[i] = lens[i];    
     engine[i - shift] -= 1;
-    shift--;
 
-    while (shift > 0) {
-      engine[i - shift] = lens[i - shift]
+    while(shift > 0) {
       shift--;
+      engine[i - shift] = lens[i - shift];
     }
   }
-
+  
   return res;
 }
 
@@ -107,6 +119,6 @@ let expectations = {
 };
 
 console.log(`
-${getPINs("135")}
-Expectations: ${expectations}
+${getPINs("8")}
+Expectations: ${JSON.stringify(expectations)}
 `);
