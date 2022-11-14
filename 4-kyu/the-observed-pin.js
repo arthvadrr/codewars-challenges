@@ -27,10 +27,11 @@ Detective, we are counting on you!
 */
 
 const getPINs = observed => {
-  const res = [observed];
+  const res = [];
   const observedArr = observed.split('');
-  
-  const matrix = [
+  const observedMatrix = Array.from({length: observed.length}, () => []);
+
+  const keypad = [
     ["1", "2", "3"],
     ["4", "5", "6"],
     ["7", "8", "9"],
@@ -38,21 +39,62 @@ const getPINs = observed => {
   ];
 
   const getPos = str => {
-    for (let a = 0; a < matrix.length; a++) {
-      for (let b = 0; b < matrix[a].length; b++) {
-        if (str === matrix[a][b]) return [a, b];
+    for (let a = 0; a < keypad.length; a++) {
+      for (let b = 0; b < keypad[a].length; b++) {
+        if (str === keypad[a][b]) return [a, b];
       }
     }
   }
 
-  const up    = ([x, y]) => [x - 1, y];
-  const down  = ([x, y]) => [x + 1, y];
-  const left  = ([x, y]) => [x, y - 1];
-  const right = ([x, y]) => [x, y + 1];
+  const getVal = ([x, y]) => keypad?.[x]?.[y]
+  const up     = ([x, y]) => [x - 1, y];
+  const down   = ([x, y]) => [x + 1, y];
+  const left   = ([x, y]) => [x, y - 1];
+  const right  = ([x, y]) => [x, y + 1];
   const deltas = [up, down, left, right];
 
   for (let a = 0; a < observedArr.length; a++) {
+    let pos = getPos(observedArr[a]);
+    observedMatrix[a].push(getVal(pos));
+    
+    for (let f of deltas) {
+      let adj = f(pos);
+      let val = getVal(adj);
+      
+      if (val) observedMatrix[a].push(val)
+    }
+  }
 
+  console.log(observedMatrix)
+
+  let code = [];
+  const lens = [];
+  observedMatrix.forEach(a => lens.push(a.length - 1));
+  const engine = Array.from(lens);
+  
+  console.log(Math.max(...engine));
+  
+  while (Math.max(...engine)) {
+    const i = lens.length - 1;
+    let shift = 0;
+    
+    //this works dont fuking touch it
+    while(engine[i] > -1) {
+      console.log(engine);
+      engine[i]--;
+    }
+
+    while (engine[i - shift] === 0) {
+      shift++;
+    }
+    
+    engine[i - shift] -= 1;
+    shift--;
+
+    while (shift > 0) {
+      engine[i - shift] = lens[i - shift]
+      shift--;
+    }
   }
 
   return res;
@@ -65,6 +107,6 @@ let expectations = {
 };
 
 console.log(`
-${getPINs("11")}
+${getPINs("135")}
 Expectations: ${expectations}
 `);
