@@ -16,11 +16,31 @@ The order of the permutations doesn't matter.
 */
 
 const permutations = string => {
-  let res = [];
+  const res = [string, string.split('').reverse().join('')];
+  const arr = string.split('');
 
-  
+  const swap = (x, y, pos1 = arr[x], pos2 = arr[y]) => {arr[x] = pos2; arr[y] = pos1}
+  const shift = () => arr.push(arr.shift());
+  const fullSwap = () => {
+    for (let i = 0; i < arr.length - 1; i++) {
+      const pos1 = i;
+      const pos2 = i+1 > arr.length - 1 ? 0 : i+1;
+      swap(pos1, pos2);
+      res.push(arr.join(''));
+    }
+  }
 
-	return string;
+  switch (arr.length) {
+    case 1: return [string]
+    case 2: return [arr.join(''), arr.reverse().join('')]
+    default: {
+      arr.forEach(() => {
+        fullSwap(); 
+        shift();
+      }); 
+      return [...new Set(res)];
+    }
+  }
 }
 
 console.log(permutations('a'), "['a']");
