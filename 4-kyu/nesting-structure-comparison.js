@@ -22,9 +22,23 @@ For example:
 For your convenience, there is already a function 'isArray(o)' declared and defined that returns true if its argument is an array, false otherwise.
 */
 
-Array.prototype.sameStructureAs = () => {
-  console.log('hi');
-}
+Array.prototype.sameStructureAs = function (other) {
+  if (!Array.isArray(other)) return false;
+
+  let key = 0;
+
+  const mapStructure = arr => {
+    let res = arr.map(i => {
+      if (Array.isArray(i)) {key++; return mapStructure(i)}
+      return key;
+    });
+    
+    key = 0;
+    return res;
+  }
+
+  return mapStructure(this).join() === mapStructure(other).join();
+};
 
   console.log([1,1,1].sameStructureAs([2,2,2]), "[1,1,1] same as [2,2,2]");
   // console.log([1,[1,1]].sameStructureAs([2,[2,2]]), "[1,[1,1]] same as [2,[2,2]]");
