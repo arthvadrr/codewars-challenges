@@ -15,34 +15,74 @@ Examples:
 The order of the permutations doesn't matter.
 */
 
+/*
 const permutations = string => {
-  const res = [string, string.split('').reverse().join('')];
+  const perm = string.split('');
+  const length = perm.length;
+  const res = [perm.join('')];
+  let combo = new Array(length).fill(0);
+  let a, b;
+  let c = 1;
+
+
+  while (c < length) {
+    if (combo[c] < c) {
+      a = c % 2 || combo[c];
+      b = perm[c];
+      perm[c] = perm[a];
+      perm[a] = b;
+      combo[c]++;
+
+      c = 1;
+      res.push(perm.join(''));
+      continue;
+    }
+    
+    combo[c] = 0;
+    c++;
+  }
+  return res;
+}
+*/
+
+const permutations = string => {
+  const res = [string];
   const arr = string.split('');
+  const len = arr.length;
 
-  const swap = (x, y, pos1 = arr[x], pos2 = arr[y]) => {arr[x] = pos2; arr[y] = pos1}
-  const shift = () => arr.push(arr.shift());
-  const fullSwap = () => {
-    for (let i = 0; i < arr.length - 1; i++) {
-      const pos1 = i;
-      const pos2 = i+1 > arr.length - 1 ? 0 : i+1;
-      swap(pos1, pos2);
-      res.push(arr.join(''));
+  const getPerms = string => {
+    let i = 1;
+    let combo = Array.from({length: len}).fill(0);
+    const push = (x = res.push(arr.join(''))) => 1
+    const swap = (a, b) => {
+      const c = arr[a];
+      const d = arr[b];
+      arr[a] = d;
+      arr[b] = c;
+      return 1;
     }
+  
+    while (i < len) {
+      if (combo[i] < i) {
+        const a = i % 2 && combo[i];
+        swap(i, a);
+        combo[i]++;
+        i = push();
+        continue;
+      } else combo[i++] = 0;
+    }
+    return [...new Set(res)];
   }
 
-  switch (arr.length) {
-    case 1: return [string]
-    case 2: return [arr.join(''), arr.reverse().join('')]
-    default: {
-      arr.forEach(() => {
-        fullSwap(); 
-        shift();
-      }); 
-      return [...new Set(res)];
+  switch (len) {
+    case 1:  return [string]
+    case 2:  return [...new Set([string, string.split('').reverse().join('')])];
+    default: return getPerms()
     }
-  }
 }
 
+console.log(permutations('123'))
 console.log(permutations('a'), "['a']");
 console.log(permutations('ab'), "['ab', 'ba']");
 console.log(permutations('aabb'), "['aabb', 'abab', 'abba', 'baab', 'baba', 'bbaa']");
+console.log(permutations('abcd'), "['abcd', 'abdc', 'acbd','acdb','adbc','adcb','bacd','badc','bcad','bcda','bdac','bdca','cabd','cadb','cbad','cbda','cdab','cdba','dabc','dacb','dbac','dbca','dcab','dcba']");
