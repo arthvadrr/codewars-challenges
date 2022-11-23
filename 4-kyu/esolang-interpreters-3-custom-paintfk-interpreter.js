@@ -58,75 +58,47 @@ A few things to note:
 Good luck :D
 */
 
-
+// esolang interpreters kyu-4 - paintf**k
 const interpreter = (code, iterations, width, height) => {
-    // We need to make instructions iterable so we split it into an array
-    const c = code.split('');
+    const c   = code.split('');
+    const t   = Array.from({length: height}, () => Array.from({length: width}).fill('0'));
+    const pos = [0, 0];
 
-    // We create a 2D matrix from given width and height, and initialize to "0" (string)
-    const t = Array.from({length: height}, () => Array.from({length: width}).fill('0'));
+    const flip  = () => t[pos[0]][pos[1]] = t[pos[0]][pos[1]] === '0' ? '1' : '0';
+    const right = () => ++pos[1] > width  - 1 ? pos[1] = 0       : pos[1];
+    const down  = () => ++pos[0] > height - 1 ? pos[0] = 0       : pos[0];
+    const up    = () => --pos[0] < 0       ? pos[0] = height - 1 : pos[0];
+    const left  = () => --pos[1] < 0       ? pos[1] = width  - 1 : pos[1];
 
-    // Make the max bounds of the matrix clear
-    const boundsX = width  - 1;
-    const boundsY = height - 1; 
-
-    // Keep track of the current matrix position
-    let pos = [0, 0];
-
-    // This flips the current matrix position
-    const flip = () => t[pos[0]][pos[1]] = t[pos[0]][pos[1]] === '0' ? '1' : '0';
-
-    /*
-     Move matrix position, then check if its in bounds...
-     If position is out of bounds, change position to row/column start/end.
-    */
-    const right = () => ++pos[1] > boundsX ? pos[1] = 0       : pos[1];
-    const down  = () => ++pos[0] > boundsY ? pos[0] = 0       : pos[0];
-    const up    = () => --pos[0] < 0       ? pos[0] = boundsY : pos[0];
-    const left  = () => --pos[1] < 0       ? pos[1] = boundsX : pos[1];
-
-    // Return the matching closing bracket position
-    const getLoopClosePos = i => {
-        let block = 0;
-        
+    const getMatchingClosingBracket = (i, block = 0) => {
         for (; i < c.length; i++) {
-        if (c[i]  === ']') block--;
-        if (c[i]  === '[') block++;
-        if (block ===  0 ) return i;
+            if (c[i]  === ']') block--;
+            if (c[i]  === '[') block++;
+            if (block ===  0 ) return i;
         }
     }
 
-    // Return the matching opening bracket position
-    const getLoopOpenPos = i => {
-        let block = 0;
-
+    const getMatchingOpeningBracket = (i, block = 0) => {
         for (;i > -1; i--) {
-        if (c[i]  === '[') block--;
-        if (c[i]  === ']') block++;
-        if (block ===  0 ) return i;
+            if (c[i]  === '[') block--;
+            if (c[i]  === ']') block++;
+            if (block ===  0 ) return i;
         }
     }
 
-    /*
-     Iterate through the instructions, break when through all iterations.
-     Note there is a default to "continue;", which prevents invalid characters from costing an iteration.
-    */
     for (let i = 0; i < c.length; i++) {
         if (iterations === 0) break;
-
             switch (c[i]) {
             case '*': flip();  break;
             case 'n': up();    break;
             case 'e': right(); break;
             case 's': down();  break;
             case 'w': left();  break;
-            case '[': if (t[pos[0]][pos[1]] === '0') i = getLoopClosePos(i); break;
-            case ']': if (t[pos[0]][pos[1]] !== '0') i = getLoopOpenPos(i);  break;
+            case '[': if (t[pos[0]][pos[1]] === '0') i = getMatchingClosingBracket(i);  break;
+            case ']': if (t[pos[0]][pos[1]] !== '0') i = getMatchingOpeningBracket(i);  break;
             default: continue;
-        }
-        iterations--;
-    }
-    return t.map(a => a.join('')).join('\r\n');
+        } iterations--;
+    } return t.map(a => a.join('')).join('\r\n');
 }
 
 console.log('returned', interpreter("*[es*]", 1000, 5, 6)); 
