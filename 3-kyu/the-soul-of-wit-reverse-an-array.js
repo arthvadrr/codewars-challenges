@@ -11,4 +11,6 @@ And this time you won't be able to do the thing from that kata.
 
 require isn't allowed as well.
 */
+
+//code golf
 reverse=a=>a.map(a.pop,[...a])
