@@ -11,42 +11,100 @@ Easy case is when the list is made up of only positive numbers and the maximum s
 Empty list is considered to have zero greatest sum. Note that the empty list or array is also a valid sublist/subarray.
 
 */
+const $start = document.querySelector('.start');
 
-console.time('time1');
+const $span_length = document.querySelector('.length');
+const $span_sum = document.querySelector('.sum');
+const $span_range = document.querySelector('.span-range');
+const $span_loopsize = document.querySelector('.loopsize');
+const $span_subsum = document.querySelector('.subsum');
+const $span_speed = document.querySelector('.speed-text');
+
+const $div_array = document.querySelector('.array')
+const $span_arrayContent = document.querySelector('.array-content');
+let sleepLength = 1000;
+
+const $range_speed = document.querySelector(".speed-range")
+$range_speed.addEventListener("input", (e) => {
+  sleepLength = e.target.value;
+  $span_speed.textContent = e.target.value;
+});
+
+const sleep = (time) => {
+  return new Promise(resolve => setTimeout(resolve, time))
+}
+
 const maxSequence = arr => {
   let sum = 0;
   const len = arr.length;
 
+  let arrayContentStr = '';
+
+  //create array on page
+
+  $span_arrayContent.textContent = arrayContentStr;
+
   if (len > 0) {
     let range = 1;
 
-    while (range < len + 1) {
-      let loopSize = len + 1 - range;
+    const findRange = async () => {
+      for (let i = 0; i < 100; i++) {
+        while (range < len + 1) {
+          let loopSize = len + 1 - range;
 
-      for (let i = 0; i < loopSize; i++) {
-        let subSum = 0
-        let j = i;
-        
-        while (j < i + range) {
-          subSum += arr[j]
-          j++
+          for (let i = 0; i < loopSize; i++) {
+            let subSum = 0
+            let j = i;
+            
+            while (j < i + range) {
+              await sleep(sleepLength);
+              subSum += arr[j]
+              j++
+
+              $span_arrayContent.innerHTML = '';
+
+              for (let x = 0; x < arr.length; x++) {
+                  const ele = document.createElement("span");
+                  if (x !== len - 1) ele.textContent = `${arr[x]}, `
+                  else ele.textContent = arr[x];
+
+                  if (x >= i  && x < j) {
+                    ele.classList.add('highlighted');
+                  }
+
+                  $span_arrayContent.appendChild(ele);
+              }
+
+              
+              $span_subsum.textContent = subSum;
+              $span_length.textContent = len;
+              $span_range.textContent = range;
+              $span_loopsize.textContent = loopSize;
+            }
+
+            sum = subSum > sum ? subSum : sum;
+
+            $span_sum.textContent = sum;
+            if (subSum === sum) {
+              $span_sum.classList.add('new');
+              await sleep(300);
+              $span_sum.classList.remove('new');
+            }
+          }
+          range++;
         }
-
-        sum = subSum > sum ? subSum : sum;
       }
-      range++;
     }
+    findRange();
   }
 
   return sum;
 }
 
-console.timeEnd('time1');
-
-
-// console.log(maxSequence([]), '0');
-// console.log(maxSequence([-2, 1, -3, 4, -1, 2, 1, -5, 4]), '6');
-
-console.log(maxSequence([
-  -43,-27,-9,25,32,15,-34,19,-5,9,26,16,20,-32,23,-5,-28,-20,-45,-18,-6,-33,43,47,23,-19,27,-26,-2,0,13,-45,40,-29,-20,38,23,-34,-19,1,34,-49,-25,0,-15,-34,14,22,21,28,35,19,21,-7,10,-1,9,-12,18,-33,46,0,27
-]), 'expected 217');
+$start.addEventListener('click', (e) => {
+  e.target.classList.add('dnone')
+  maxSequence([
+    7,   4, 11, -11,  39, 36,
+  10,  -6, 37
+  ])
+})
