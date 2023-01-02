@@ -3,3 +3,5 @@
 1. Do not copy these solutions
 1. Do not contribute to this repo
 1. Misc contains random musings, code help, and speed optimizations
+
+## Pages
