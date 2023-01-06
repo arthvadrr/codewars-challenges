@@ -79,7 +79,7 @@ const getPrimes = n => {
     return factors;
   }
 }
-console.log(getPrimes(25))
+
 const buildEmptyToDepth = num => {
   let arr = [];
   const p = a => [a];
