@@ -2,31 +2,32 @@ const permutational_primes = (
     $arg__upper_limit, 
     $arg__number_of_prime_permutations
   ) => {
-
-  const result = {
-    primes                : [],
-    number_of_perm_primes : 0,
-    smallest_prime        : 0,
-    largest_prime         : 0
-  }
-
-  const getPrimes = number => {
-    if (number > 2) {
-      const primes = []
-      let num      = number
   
-      for (let i = 2; i <= num; i++) {
-        while (num % i === 0) {
-          primes.push(i)
-          num /= i
-        }
+  /* 
+    Subroutines
+    These subroutines build on previous subroutines, so order matters
+  */
+    
+  const is_prime = number => {
+    if (number > 1) {
+      for (let i = 2; i < number; i++) {
+        if (number % i === 0) return false
       }
-  
-      return primes
-    }
+      return true
+    } else return false
   }
 
-  const getNumberPermutations = number => {
+  const get_primes = number => {
+    const prime_array = []
+    
+    for (let i = 2; i <= number; i++) {
+      if (is_prime(i)) prime_array.push(i)
+    }
+
+    return prime_array
+  }
+
+  const get_number_permutations = number => {
     const result_arr = []
     const num_string = number.toString()
     const num_arr    = num_string.split('') 
@@ -51,33 +52,67 @@ const permutational_primes = (
     return result_arr
   }
 
-  return [
-    result.number_of_perm_primes,
-    result.smallest_prime,
-    result.largest_prime
-  ]
+  const get_primes_from_array = (array, max = -1) => {
+    const result_arr = []
 
-}
+    array.forEach(number => {
+      if (
+        is_prime(number) &&
+        (max === -1 || number <= max) 
+      ) result_arr.push(number)
+    })
 
+    return result_arr
+  }
+ 
+  const has_required_amount_of_prime_permutations = prime => {
+    const perms = get_number_permutations(prime)
+    const primes_from_perms = get_primes_from_array(perms, $arg__upper_limit)
 
-const isPrime = number => {
-  if (number > 1) {
-    for (let i = 2; i < number; i++) {
-      if (number % i === 0) return false
-    }
-    return true
-  } else return false
-}
-
-const getPrimes = number => {
-  const prime_array = []
-  
-  for (let i = 2; i <= number; i++) {
-    if (isPrime(i)) prime_array.push(i)
+    if (primes_from_perms.length === $arg__number_of_prime_permutations + 1) return primes_from_perms
+    return false
   }
 
-  return prime_array
+  const recursively_reduce_primes_with_correct_amount_of_prime_permutations = primes => {
+    const prime = primes.shift()
+    const prime_perms = has_required_amount_of_prime_permutations(prime)
+
+    if (prime_perms) {
+      result.primes_with_required_number_of_prime_permutations.push(prime)
+      console.log(prime_perms)
+      prime_perms.forEach(perm => {
+        const index = primes.indexOf(perm)
+        if (index !== -1) primes.splice(index, 1)
+      })
+    }
+
+    if (primes.length > 0) {
+      recursively_reduce_primes_with_correct_amount_of_prime_permutations(primes)
+    }
+  }
+
+  /* 
+    Logic
+    Do the thing 
+  */
+
+  const result = {
+    primes_with_required_number_of_prime_permutations : [],
+    smallest_prime        : 0,
+    largest_prime         : 0
+  }
+
+  const primes = get_primes($arg__upper_limit)
+  recursively_reduce_primes_with_correct_amount_of_prime_permutations(primes)
+  console.log(result.primes_with_required_number_of_prime_permutations)
+
+  // return [
+  //   result.primes_with_required_number_of_prime_permutations.length,
+  //   result.smallest_prime,
+  //   result.largest_prime
+  // ]
 }
-//console.log(permutational_primes(1000, 3))
+
+console.log(permutational_primes(1000, 3))
 //console.log(getNumberPermutations(12))
 //console.log(getNumberPermutations(3699))
