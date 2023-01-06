@@ -10,10 +10,10 @@ const permutational_primes = (
     largest_prime         : 0
   }
 
-  const getPrimes = n => {
-    if (n > 1) {
+  const getPrimes = number => {
+    if (number > 2) {
       const primes = []
-      let num      = n
+      let num      = number
   
       for (let i = 2; i <= num; i++) {
         while (num % i === 0) {
@@ -26,7 +26,30 @@ const permutational_primes = (
     }
   }
 
-  const isPrime = n => getPrimes(n)?.length === 1
+  const getNumberPermutations = number => {
+    const result_arr = []
+    const num_string = number.toString()
+    const num_arr    = num_string.split('') 
+    let   place      = num_string.length
+    let   count      = 0
+  
+    while (count.toString().length !== place) count++
+  
+    while (count.toString().length === place) {
+      let temp_number_arr = Array.from(num_arr)
+      const count_arr     = count.toString().split('')
+      
+      count_arr.forEach(num_string => {
+        const index =  temp_number_arr.indexOf(num_string)
+        if (index !== -1) temp_number_arr.splice(index, 1)
+      })
+  
+      if (temp_number_arr.length === 0) result_arr.push(count)
+      count++
+    }
+  
+    return result_arr
+  }
 
   return [
     result.number_of_perm_primes,
@@ -37,31 +60,24 @@ const permutational_primes = (
 }
 
 
-const getNumberPermutations = number => {
-  const result_arr  = []
-  const num_string = number.toString()
-  const num_arr    = num_string.split('') 
-  let place        = num_string.length
-  let count        = 0
+const isPrime = number => {
+  if (number > 1) {
+    for (let i = 2; i < number; i++) {
+      if (number % i === 0) return false
+    }
+    return true
+  } else return false
+}
 
-  while (count.toString().length !== place) count++
-
-  while (count.toString().length === place) {
-    let temp_number_arr = Array.from(num_arr)
-    const count_arr     = count.toString().split('')
-    
-    count_arr.forEach(num_string => {
-      const index     = temp_number_arr.indexOf(num_string)
-      if (index !== -1) temp_number_arr.splice(index, 1)
-    })
-
-    if (temp_number_arr.length === 0) result_arr.push(count)
-    count++
+const getPrimes = number => {
+  const prime_array = []
+  
+  for (let i = 2; i <= number; i++) {
+    if (isPrime(i)) prime_array.push(i)
   }
 
-  return result_arr
+  return prime_array
 }
-console.log(getNumberPermutations(110))
-console.log(getNumberPermutations(369))
+//console.log(permutational_primes(1000, 3))
 //console.log(getNumberPermutations(12))
 //console.log(getNumberPermutations(3699))
