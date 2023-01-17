@@ -5,3 +5,5 @@
 1. Misc contains random musings, code help, and speed optimizations
 
 ## Pages
+
+- [Max Subsum code visualization](https://arthvadrr.github.io/codewars-challenges/5-kyu/index.html)
