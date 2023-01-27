@@ -99,13 +99,14 @@ const permutational_primes = (
 
     for (let i = 0; i < cached_primes.length; i++) {
       const prime = cached_primes[i]
-
+      console.log(prime)
       if (prime > $arg__upper_limit) break
 
       if (skip_arr.includes(prime)) continue
 
       const perms = has_required_amount_of_prime_permutations(prime)
-
+      console.log(prime)
+      console.log(perms)
       if (perms) {
         if (first) {
           lowest_prime = cached_primes[i]
@@ -116,6 +117,7 @@ const permutational_primes = (
         skip_arr.push(...perms)
         number_of_primes_that_have_enough_perms++
       }
+      console.log(skip_arr)
     }
 
     return [number_of_primes_that_have_enough_perms, lowest_prime, highest_prime]
@@ -125,15 +127,15 @@ const permutational_primes = (
 }
 
 console.time('perms')
-console.log(permutational_primes(1000, 3))
-console.log(permutational_primes(1000, 4))
-console.log(permutational_primes(1000, 5))
-console.log(permutational_primes(2000, 1))
-console.log(permutational_primes(2000, 2))
-console.log(permutational_primes(2000, 3))
-console.log(permutational_primes(2000, 4))
-console.log(permutational_primes(2000, 5))
-console.log(permutational_primes(40829, 4))
-console.log(permutational_primes(50000, 2))
-console.log(permutational_primes(3000, 1))
+console.log(permutational_primes(1000, 1))
+// console.log(permutational_primes(1000, 4))
+// console.log(permutational_primes(1000, 5))
+// console.log(permutational_primes(2000, 1))
+// console.log(permutational_primes(2000, 2))
+// console.log(permutational_primes(2000, 3))
+// console.log(permutational_primes(2000, 4))
+// console.log(permutational_primes(2000, 5))
+// console.log(permutational_primes(40829, 4))
+// console.log(permutational_primes(50000, 2))
+// console.log(permutational_primes(3000, 1))
 console.timeEnd('perms')
