@@ -1,47 +1,33 @@
 /*Permutational Primes*/
 
 //global scope
-
-let   cached_start  = 0
 const cached_primes = []
 const cached_perms = {}
 
 const is_prime = number => {
   if (number > 2) {
-    for (let i = 3; i < number; i++) {
-      if (number % i === 0) return false
-    }
-
+    for (let i = 3; i < number; i++) if (number % i === 0) return false
     return true
   } else return false
 }
 
-const generate_primes = (start, max) => {
-  for (let i = start; i <= max; i++) {
-    if (is_prime(i)) cached_primes.push(i)
-  }
-}
-
-generate_primes(0, 50000)
+for (let i = 1; i < 50000; i+=2) if (is_prime(i)) cached_primes.push(i)
 
 const permutational_primes = (
     $arg__upper_limit, 
     $arg__number_of_prime_permutations
   ) => {
-
-  const prime_exists = number => cached_primes.includes(number)
-
   const get_permutations = num_arr => {
     let result_arr = []
-  
+    
     if (num_arr.length === 1) return [num_arr]
-  
+
     for (let a = 0; a < num_arr.length; a++) {
       const number = num_arr[a]
       const rest_recursed = get_permutations([...num_arr.slice(0, a), ...num_arr.slice(a + 1)])
       for (const remainder of rest_recursed) result_arr.push([number, remainder].join(''))
     }
-    
+
     return result_arr
   }
 
@@ -49,12 +35,10 @@ const permutational_primes = (
     const result_arr = []
     const num_string = number.toString()
     const num_arr    = num_string.split('')
-    const result = [...new Set(get_permutations(num_arr))]
-
+    const result     = [...new Set(get_permutations(num_arr))]
+    
     for (let i = 0; i < result.length; i++) {
-      if (result[i][0] !== '0') {
-         result_arr.push(Number(result[i]))
-      }
+      if (result[i][0] !== '0') result_arr.push(Number(result[i]))
     }
 
     return result_arr
@@ -64,7 +48,7 @@ const permutational_primes = (
     const result_arr = []
 
     array.forEach(number => {
-      if (prime_exists(number)) {
+      if (cached_primes.includes(number)) {
         result_arr.push(number)
       }
     })
@@ -76,11 +60,10 @@ const permutational_primes = (
     let primes_from_perms
 
     if (cached_perms[prime]) {
-      primes_from_perms = cached_perms[prime]
+      primes_from_perms   = cached_perms[prime]
     } else {
-      const perms = get_number_permutations(prime)
-      primes_from_perms = get_primes_from_array(perms)
-      
+      const perms         = get_number_permutations(prime)
+      primes_from_perms   = get_primes_from_array(perms)
       cached_perms[prime] = primes_from_perms
     }
 
@@ -91,22 +74,21 @@ const permutational_primes = (
   }
   
   const get_primes = () => {
-    let number_of_primes_that_have_enough_perms = 0
-    let first = true
-    let lowest_prime = 0
-    let highest_prime = 0
-    const skip_arr = []
+    let   number_of_primes_that_have_enough_perms = 0
+    let   first                                   = true
+    let   lowest_prime                            = 0
+    let   highest_prime                           = 0
+    const skip_arr                                = []
 
     for (let i = 0; i < cached_primes.length; i++) {
       const prime = cached_primes[i]
-      console.log(prime)
+      
       if (prime > $arg__upper_limit) break
-
+      
       if (skip_arr.includes(prime)) continue
 
       const perms = has_required_amount_of_prime_permutations(prime)
-      console.log(prime)
-      console.log(perms)
+
       if (perms) {
         if (first) {
           lowest_prime = cached_primes[i]
@@ -117,7 +99,6 @@ const permutational_primes = (
         skip_arr.push(...perms)
         number_of_primes_that_have_enough_perms++
       }
-      console.log(skip_arr)
     }
 
     return [number_of_primes_that_have_enough_perms, lowest_prime, highest_prime]
@@ -127,7 +108,7 @@ const permutational_primes = (
 }
 
 console.time('perms')
-console.log(permutational_primes(1000, 1))
+console.log(permutational_primes(500, 2))
 // console.log(permutational_primes(1000, 4))
 // console.log(permutational_primes(1000, 5))
 // console.log(permutational_primes(2000, 1))
