@@ -54,7 +54,6 @@ list_using_comp = [foo *10 for foo in input_list if foo % 2 == 0]
 list_using_comp_2 = [foo *10 for foo in input_list if foo % 2 == 0]
 
 list_using_comp_3 = [foo *10 for foo in input_list if foo % 3 == 0]
-  
 print("Output List using list comprehensions:", list_using_comp_3)
 
 print(pick_peaks([-5, 11, 16, 16, -2, 8, 7, 0, 15, 13, 17, 13]))
