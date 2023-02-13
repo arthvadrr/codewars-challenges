@@ -58,3 +58,4 @@ print(validate_sudoku([[1,2,3,4,5,6,7,8,9],
 				  [1,2,3,4,5,6,7,8,9],
 				  [1,2,3,4,5,6,7,8,9]]))
 
+valid_solution=lambda b,f=lambda e:{*e}=={*range(1,10)}:all(map(f,b))and all(map(f,zip(*b)))and 9==len({*b[0][0:3],*b[1][0:3],*b[2][0:3]})
