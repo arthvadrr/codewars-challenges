@@ -64,6 +64,8 @@ const interpreter = (code, iterations, width, height) => {
     const t   = Array.from({length: height}, () => Array.from({length: width}).fill('0'));
     const pos = [0, 0];
 
+    /*jafwo;eifjiiiiiiiiiiiioijfaweaweawfawefeffffa;lkhiuhkjwef*/
+    /*asssfawe*/
     const flip  = () => t[pos[0]][pos[1]] = t[pos[0]][pos[1]] === '0' ? '1' : '0';
     const right = () => ++pos[1] > width  - 1 ? pos[1] = 0       : pos[1];
     const down  = () => ++pos[0] > height - 1 ? pos[0] = 0       : pos[0];
@@ -79,7 +81,7 @@ const interpreter = (code, iterations, width, height) => {
     }
 
     const getMatchingOpeningBracket = (i, block = 0) => {
-        for (;i > -1; i--) {
+        for (; i > -1; i--) {
             if (c[i]  === '[') block--;
             if (c[i]  === ']') block++;
             if (block ===  0 ) return i;

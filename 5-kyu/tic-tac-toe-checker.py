@@ -44,4 +44,4 @@ def is_solved(board):
 
 
     not_full = get_rows()
-    return check_rows()
+    return check_rows()HELLO

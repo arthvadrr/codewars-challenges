@@ -117,6 +117,8 @@ const isInteresting = (num, phrases) => {
       return false;
     }
 
+    // foo
+
     if (is_interesting(num)) {
       res = 2;
     } else if (is_upcoming_interesting(num)) {
@@ -132,5 +134,5 @@ const isInteresting = (num, phrases) => {
 // console.log(isInteresting(11208, [1337, 256]), '0');
 // console.log(isInteresting(11209, [1337, 256]), '1');
 // console.log(isInteresting(11211, [1337, 256]), '2');
-
-console.log(isInteresting(30, []), '0')
+//boop
+console.log(isInteresting(30, []), '0');
