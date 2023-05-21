@@ -88,102 +88,117 @@ Notes:
 in knapsack return, keep track of item weight and price to build the greedyThief return
 */
 
-const bestBag = [];
+// const bestBag = [];
 
-const tempobj = {
-  include: [],
-  exclude: []
-}
+// const tempobj = {
+//   include: [],
+//   exclude: []
+// }
 
-let currentBranch = [];
+// let currentBranch = [];
 
-const knapsack = (
-    values, 
-    weights, 
-    position, 
-    maxWeight,
-    branch,
-    included
-  ) => {
-  if (maxWeight < 0) {
-    currentBranch = [];
-    return -99999;
+// const knapsack = (
+//     values, 
+//     weights, 
+//     position, 
+//     maxWeight,
+//     branch,
+//     included
+//   ) => {
+//   if (maxWeight < 0) {
+//     currentBranch = [];
+//     return -99999;
+//   }
+
+//   if (position < 0 || maxWeight === 0) {
+//     return 0;
+//   }
+
+//   const include = values[position] + knapsack(
+//     values, 
+//     weights, 
+//     position - 1, 
+//     maxWeight - weights[position],
+//     [],
+//     1
+//   );
+
+//   const exclude = knapsack(
+//     values, 
+//     weights, 
+//     position - 1, 
+//     maxWeight,
+//     [],
+//     0
+//   );
+
+//   if (included) {
+//     currentBranch.push({weight: weights[position], price: values[position]});
+//   } else {
+//     currentBranch = [];
+//   }
+
+//   return Math.max(include, exclude)
+// };
+
+// const greedyThief = (itemsArr, maxWeight) => {
+//   const weights = itemsArr.map(item => item.weight);
+//   const values = itemsArr.map(item => item.price);
+//   const bestValue = knapsack(values, weights, values.length - 1, maxWeight, [], 1);
+//   console.log(bestValue);
+//   console.log(currentBranch);
+//   return bestBag;
+// };
+
+const greedyThief = (items, maxWeight) => {
+  const path = [];
+  const cache = new Map();
+
+  const DFS = (index, left) => {
+    if (index === items.length) return [0, null];
+    if (cache.has(`${index}-${left}`)) return cache.get(`${index}-${left}`);
+
+    const [leftA] = DFS(index + 1, left);
+    let [rightA, rightB] = [null, null];
+
+    const { weight: A, price: B } = items[index];
+    if (A <= left) {
+      [rightA, rightB] = DFS(index + 1, left - A);
+      rightA += B;
+    }
+
+    const result = leftA >= rightA ? [leftA, 0] : [rightA, 1];
+    cache.set(`${index}-${left}`, result);
+    return result;
+  };
+
+  for (let i = 0; i < items.length; i++) {
+    const [, b] = DFS(i, maxWeight);
+    if (b === 1) {
+      maxWeight -= items[i].weight;
+      path.push(items[i]);
+    }
   }
 
-  if (position < 0 || maxWeight === 0) {
-    return 0;
-  }
-
-  const include = values[position] + knapsack(
-    values, 
-    weights, 
-    position - 1, 
-    maxWeight - weights[position],
-    [],
-    1
-  );
-
-  const exclude = knapsack(
-    values, 
-    weights, 
-    position - 1, 
-    maxWeight,
-    [],
-    0
-  );
-
-  if (included) {
-    currentBranch.push({weight: weights[position], price: values[position]});
-  } else {
-    currentBranch = [];
-  }
-
-  return Math.max(include, exclude)
-};
-
-const greedyThief = (itemsArr, maxWeight) => {
-  const weights = itemsArr.map(item => item.weight);
-  const values = itemsArr.map(item => item.price);
-  const bestValue = knapsack(values, weights, values.length - 1, maxWeight, [], 1);
-  console.log(bestValue);
-  console.log(currentBranch);
-  return bestBag;
+  return path;
 };
 
 console.log(
   greedyThief(
     [
-      { weight: 2, price: 6 },
-      { weight: 2, price: 3 },
-      { weight: 6, price: 5 },
-      { weight: 5, price: 4 },
-      { weight: 4, price: 6 },
+      { weight: 2, price: 2 },
+      { weight: 2, price: 2 },
+      { weight: 2, price: 2 },
+      { weight: 2, price: 2 },
+      { weight: 2, price: 2 },
+      { weight: 0, price: 2 },
+      { weight: 10, price: 10 },
+      { weight: 5, price: 5 },
     ],
-    10
-  ),
-  [
-    { weight: 2, price: 6 },
-    { weight: 2, price: 3 },
-    { weight: 4, price: 6 },
-  ]
+    10,
+    [
+      { weight: 0, price: 2 },
+      { weight: 10, price: 10 },
+    ]
+  )
 );
-
-// console.log(
-//   greedyThief(
-//     [
-//       { weight: 2, price: 2 },
-//       { weight: 2, price: 2 },
-//       { weight: 2, price: 2 },
-//       { weight: 2, price: 2 },
-//       { weight: 2, price: 2 },
-//       { weight: 0, price: 2 },
-//       { weight: 10, price: 10 },
-//       { weight: 5, price: 5 },
-//     ],
-//     10,
-//     [
-//       { weight: 0, price: 2 },
-//       { weight: 10, price: 10 },
-//     ]
-//   )
-// );
