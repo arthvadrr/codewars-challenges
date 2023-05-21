@@ -159,9 +159,11 @@ const greedyThief = (items, maxWeight) => {
     if (cache.has(`${index}-${left}`)) return cache.get(`${index}-${left}`);
 
     const [leftA] = DFS(index + 1, left);
+    const { weight: A, price: B } = items[index];
+    
     let [rightA, rightB] = [null, null];
 
-    const { weight: A, price: B } = items[index];
+
     if (A <= left) {
       [rightA, rightB] = DFS(index + 1, left - A);
       rightA += B;
@@ -173,8 +175,7 @@ const greedyThief = (items, maxWeight) => {
   };
 
   for (let i = 0; i < items.length; i++) {
-    const [, b] = DFS(i, maxWeight);
-    if (b === 1) {
+    if (DFS(i, maxWeight)[1] === 1) {
       maxWeight -= items[i].weight;
       path.push(items[i]);
     }
