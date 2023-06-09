@@ -32,3 +32,5 @@ const validParentheses = (p) => {
   
   return openers.length === closers.length && opened === 0;
 }
+
+

@@ -48,7 +48,7 @@ multiplicationTable(3,1) should return
 */
 
 const multiplicationTable1 = (size, mod = 1, res = []) => {
-  const createRow = () => Array.from({length: size}).fill(1).map((a, i) => (i + 1) * mod);
+const createRow = () => Array.from({length: size}).fill(1).map((a, i) => (i + 1) * mod);
   for (let i = 0; i < size; i++) {
     res.push(createRow());
     mod++;
