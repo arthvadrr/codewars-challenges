@@ -87,20 +87,26 @@ Notes:
 /*
 in knapsack return, keep track of item weight and price to build the greedyThief return
 */
-let bestBag = {};
+
+const bestBag = [];
+
+const tempobj = {
+  include: [],
+  exclude: []
+}
+
+let currentBranch = [];
 
 const knapsack = (
     values, 
     weights, 
     position, 
-    maxWeight
+    maxWeight,
+    branch,
+    included
   ) => {
-
-  if (position === 0) {
-    bestBag = {};
-  }
-
   if (maxWeight < 0) {
+    currentBranch = [];
     return -99999;
   }
 
@@ -112,20 +118,24 @@ const knapsack = (
     values, 
     weights, 
     position - 1, 
-    maxWeight - weights[position]
+    maxWeight - weights[position],
+    [],
+    1
   );
 
   const exclude = knapsack(
     values, 
     weights, 
     position - 1, 
-    maxWeight
+    maxWeight,
+    [],
+    0
   );
 
-  if (include > exclude) {
-    bestBag[position] = {weight: weights[position], price: values[position], include: true};
+  if (included) {
+    currentBranch.push({weight: weights[position], price: values[position]});
   } else {
-    bestBag[position - 1] = {weight: weights[position], price: values[position], include: false};
+    currentBranch = [];
   }
 
   return Math.max(include, exclude)
@@ -134,10 +144,10 @@ const knapsack = (
 const greedyThief = (itemsArr, maxWeight) => {
   const weights = itemsArr.map(item => item.weight);
   const values = itemsArr.map(item => item.price);
-  const bestValue = knapsack(values, weights, values.length - 1, maxWeight);
-  console.log(bestBag);
-
-  return bestValue;
+  const bestValue = knapsack(values, weights, values.length - 1, maxWeight, [], 1);
+  console.log(bestValue);
+  console.log(currentBranch);
+  return bestBag;
 };
 
 
@@ -190,24 +200,6 @@ const greedyThief = (itemsArr, maxWeight) => {
 console.log(
   greedyThief(
     [
-      { weight: 2, price: 6 },
-      { weight: 2, price: 3 },
-      { weight: 6, price: 5 },
-      { weight: 5, price: 4 },
-      { weight: 4, price: 6 },
-    ],
-    10
-  ),
-  [
-    { weight: 2, price: 6 },
-    { weight: 2, price: 3 },
-    { weight: 4, price: 6 },
-  ]
-);
-
-console.log(
-  greedyThief(
-    [
       { weight: 2, price: 2 },
       { weight: 2, price: 2 },
       { weight: 2, price: 2 },
@@ -217,9 +209,30 @@ console.log(
       { weight: 10, price: 10 },
       { weight: 5, price: 5 },
     ],
-    10
-  ), [
-    { weight: 0, price: 2 },
-    { weight: 10, price: 10 },
-  ]
+    10,
+    [
+      { weight: 0, price: 2 },
+      { weight: 10, price: 10 },
+    ]
+  )
 );
+
+// console.log(
+//   greedyThief(
+//     [
+//       { weight: 2, price: 2 },
+//       { weight: 2, price: 2 },
+//       { weight: 2, price: 2 },
+//       { weight: 2, price: 2 },
+//       { weight: 2, price: 2 },
+//       { weight: 0, price: 2 },
+//       { weight: 10, price: 10 },
+//       { weight: 5, price: 5 },
+//     ],
+//     10,
+//     [
+//       { weight: 0, price: 2 },
+//       { weight: 10, price: 10 },
+//     ]
+//   )
+// );
