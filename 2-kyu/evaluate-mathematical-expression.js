@@ -1,78 +1,76 @@
-<<<<<<< Updated upstream
-function calc(expression) {
-    const operators = {
-      '+': (a, b) => a + b,
-      '-': (a, b) => a - b,
-      '*': (a, b) => a * b,
-      '/': (a, b) => a / b,
-    };
+// function calc(expression) {
+//     const operators = {
+//       '+': (a, b) => a + b,
+//       '-': (a, b) => a - b,
+//       '*': (a, b) => a * b,
+//       '/': (a, b) => a / b,
+//     };
   
-    const precedence = {
-      '+': 1,
-      '-': 1,
-      '*': 2,
-      '/': 2,
-    };
+//     const precedence = {
+//       '+': 1,
+//       '-': 1,
+//       '*': 2,
+//       '/': 2,
+//     };
   
-    const isOperator = (char) => precedence.hasOwnProperty(char);
+//     const isOperator = (char) => precedence.hasOwnProperty(char);
   
-    function applyOperator(operands, operators) {
-      const operator = operators.pop();
-      const b = operands.pop();
-      const a = operands.pop();
-      operands.push(operators[operator](a, b));
-    }
+//     function applyOperator(operands, operators) {
+//       const operator = operators.pop();
+//       const b = operands.pop();
+//       const a = operands.pop();
+//       operands.push(operators[operator](a, b));
+//     }
   
-    function parseExpression(expression) {
-      const operands = [];
-      const operatorStack = [];
+//     function parseExpression(expression) {
+//       const operands = [];
+//       const operatorStack = [];
   
-      let number = '';
-      for (let i = 0; i < expression.length; i++) {
-        const char = expression[i];
+//       let number = '';
+//       for (let i = 0; i < expression.length; i++) {
+//         const char = expression[i];
   
-        if (char === ' ') {
-          continue;
-        }
+//         if (char === ' ') {
+//           continue;
+//         }
   
-        if (isOperator(char)) {
-          while (
-            operatorStack.length > 0 &&
-            isOperator(operatorStack[operatorStack.length - 1]) &&
-            precedence[char] <= precedence[operatorStack[operatorStack.length - 1]]
-          ) {
-            applyOperator(operands, operators);
-          }
-          operatorStack.push(char);
-        } else if (char === '(') {
-          operatorStack.push(char);
-        } else if (char === ')') {
-          while (operatorStack.length > 0 && operatorStack[operatorStack.length - 1] !== '(') {
-            applyOperator(operands, operators);
-          }
-          operatorStack.pop();
-        } else {
-          number += char;
-          if (i === expression.length - 1 || isOperator(expression[i + 1]) || expression[i + 1] === ')' || expression[i + 1] === '(') {
-            operands.push(parseFloat(number));
-            number = '';
-          }
-        }
-      }
+//         if (isOperator(char)) {
+//           while (
+//             operatorStack.length > 0 &&
+//             isOperator(operatorStack[operatorStack.length - 1]) &&
+//             precedence[char] <= precedence[operatorStack[operatorStack.length - 1]]
+//           ) {
+//             applyOperator(operands, operators);
+//           }
+//           operatorStack.push(char);
+//         } else if (char === '(') {
+//           operatorStack.push(char);
+//         } else if (char === ')') {
+//           while (operatorStack.length > 0 && operatorStack[operatorStack.length - 1] !== '(') {
+//             applyOperator(operands, operators);
+//           }
+//           operatorStack.pop();
+//         } else {
+//           number += char;
+//           if (i === expression.length - 1 || isOperator(expression[i + 1]) || expression[i + 1] === ')' || expression[i + 1] === '(') {
+//             operands.push(parseFloat(number));
+//             number = '';
+//           }
+//         }
+//       }
   
-      while (operatorStack.length > 0) {
-        applyOperator(operands, operators);
-      }
+//       while (operatorStack.length > 0) {
+//         applyOperator(operands, operators);
+//       }
   
-      return operands.pop();
-    }
+//       return operands.pop();
+//     }
   
-    return parseExpression(expression);
-  }
+//     return parseExpression(expression);
+//   }
   
   // Test cases
-  const testCases = [
-=======
+  // const testCases = [
 /*
  * Instructions
  *
@@ -209,35 +207,22 @@ const calc = exp => {
     addBranch('right', 0);
   }
 
-    console.log(tree);
+  
 
   return result;
 }
 
 
 const tests = [
->>>>>>> Stashed changes
-    ['1+1', 2],
-    ['1 - 1', 0],
-    ['1* 1', 1],
-    ['1 /1', 1],
-    ['-123', -123],
-    ['123', 123],
-    ['2 /2+3 * 4.75- -6', 21.25],
-    ['12* 123', 1476],
-    ['2 / (2 + 3) * 4.33 - -6', 7.732],
-<<<<<<< Updated upstream
-  ];
-  
-  testCases.forEach(([expression, expected]) => {
-    const result = evaluateExpression(expression);
-    console.log(`Expression: ${expression}`);
-    console.log(`Result: ${result}`);
-    console.log(`Expected: ${expected}`);
-    console.log('-------------------------');
-  });
-  
-=======
+    // ['1+1', 2],
+    // ['1 - 1', 0],
+    // ['1* 1', 1],
+    // ['1 /1', 1],
+    // ['-123', -123],
+    // ['123', 123],
+    // ['2 /2+3 * 4.75- -6', 21.25],
+    // ['12* 123', 1476],
+    // ['2 / (2 + 3) * 4.33 - -6', 7.732],
     ['(2 + (4 + 6)) - (6 + (7 * 12))']
 ];
 
@@ -246,4 +231,3 @@ for ( const [input,expected] of tests ) {
   console.log(calc(input));
   console.log('next');
 }
->>>>>>> Stashed changes
