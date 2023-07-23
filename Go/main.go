@@ -6,6 +6,6 @@ import (
 )
 
 func main () {
-	DisemvowelTrolls := kata.Disemvowel("This is a test string")
-	fmt.Println(DisemvowelTrolls)
+	result := kata.Gimme([3]int{2, 3, 1})
+	fmt.Println(result)
 }
