@@ -2,10 +2,14 @@ package main
 
 import (
 	"fmt"
-	kata "kata/kata/7-kyu"
+	kata "kata/kata/6-kyu"
 )
 
 func main () {
-	result := kata.Gimme([3]int{2, 3, 1})
-	fmt.Println(result)
+	fmt.Println(kata.ValidBraces("()"))
+	fmt.Println("--------------------")
+	fmt.Println(kata.ValidBraces("{}()[]"))
+	fmt.Println("--------------------")
+	fmt.Println(kata.ValidBraces("{}([])"))
+	fmt.Println("--------------------")
 }
