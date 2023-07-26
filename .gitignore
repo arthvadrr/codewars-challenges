@@ -1,5 +1,7 @@
 .idea
 node_modules
 .DS_store
+**/.DS_store
+
 
 4-kyu/trsh-get-perms.js
