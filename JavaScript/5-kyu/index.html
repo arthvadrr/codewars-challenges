@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Visualized maxsumarray</title>
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@500&display=swap" rel="stylesheet">
+    </head>
+
+    <body>
+        <style>
+            @import url('https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@500&display=swap');
+        </style>
+        <style>
+            body {
+                font-family: 'Roboto Mono', monospace;
+                background-color: #20202C;
+                color: #fff;
+                font-size: 40px;
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                height: 90vh;
+            }
+
+            h1 {
+                font-size: 50px;
+            }
+
+            .meta {
+                font-size: 30px;
+            }
+
+            .speed-range {
+                transform: rotate(180deg);
+            }
+
+            .highlighted {
+                color: red;
+            }
+
+            .subsum {
+                color: red;
+            }
+
+            .new {
+                color: lime;
+            }
+
+            .start {
+                padding: 1rem 4rem;
+                font-size: 20px;
+            }
+
+            .dnone {
+                display: none;
+            }
+        </style>
+
+        <div class="array">
+            <h1>Max Subsum</h1>
+            <div style="font-size:21px" class="range">
+                <label for="speed">Speed <span class="speed-text">800</span></label>
+                <input name="speed" class="speed-range" type="range" value="800" min="0" max="1000" step="100">
+            </div>
+            <div class="meta">
+                <div>Length__ <span class="length"></span></div>
+                <div>Sum_____ <span class="sum"></span></div>
+                <div>Range___ <span class="span-range"></span></div>
+                <div>Loopsize <span class="loopsize"></span></div>
+                <div>Subsum__ <span class="subsum"></span></div>
+            </div>
+            &nbsp;
+            <br />
+            <button class="start">Start</button>
+            &nbsp;
+            <br />
+            [<span class="array-content">Array</span>]
+        </div>
+        <script src="maximum-subarray-sum.js"></script>
+    </body>
+
+</html>
