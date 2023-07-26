@@ -6,4 +6,4 @@
 
 ## Pages
 
-- [Max Subsum code visualization](https://arthvadrr.github.io/codewars-challenges/5-kyu/index.html)
+- [Max Subsum code visualization](https://arthvadrr.github.io/codewars-challenges/Javascript/5-kyu/index.html)
