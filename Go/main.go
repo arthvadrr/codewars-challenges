@@ -6,10 +6,5 @@ import (
 )
 
 func main () {
-	fmt.Println(kata.ValidBraces("()"))
-	fmt.Println("--------------------")
-	fmt.Println(kata.ValidBraces("{}()[]"))
-	fmt.Println("--------------------")
-	fmt.Println(kata.ValidBraces("{}([])"))
-	fmt.Println("--------------------")
+	fmt.Println(kata.InArray([]string{"live", "arp", "strong"}, []string{"lively", "alive", "harp", "sharp", "armstrong"}))
 }
