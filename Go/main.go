@@ -1,10 +1,10 @@
 package main
 
 import (
-	"fmt"
+	fmt "fmt"
 	kata "kata/kata/6-kyu"
 )
 
 func main () {
-	fmt.Println(kata.InArray([]string{"live", "arp", "strong"}, []string{"lively", "alive", "harp", "sharp", "armstrong"}))
+	fmt.Println(kata.LongestConsec([]string{"ejjjjmmtthh", "zxxuueeg", "aanlljrrrxx", "dqqqaaabbb", "oocccffuucccjjjkkkjyyyeehh"}, 5)) //"abigailtheta"
 }
