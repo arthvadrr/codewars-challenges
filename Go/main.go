@@ -2,9 +2,10 @@ package main
 
 import (
 	fmt "fmt"
-	kata "kata/kata/6-kyu"
+	kata "kata/kata/5-kyu"
 )
 
 func main () {
-	fmt.Println(kata.LongestConsec([]string{"ejjjjmmtthh", "zxxuueeg", "aanlljrrrxx", "dqqqaaabbb", "oocccffuucccjjjkkkjyyyeehh"}, 5)) //"abigailtheta"
+	//fmt.Println("EBG13 rknzcyr")
+	fmt.Println(kata.LCS("132535365", "123456789")) //abc
 }
