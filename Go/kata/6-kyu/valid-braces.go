@@ -1,9 +1,9 @@
 package kata
 
-func ValidBraces(str string) bool {
+func validBraces(str string) bool {
 	var result bool = true
 	var history []string = []string{}
-	
+
 	braces := map[string]int {
 		"{": 0,
 		"[": 0,
@@ -15,7 +15,7 @@ func ValidBraces(str string) bool {
 		"]": "[",
 		")": "(",
 	}
-	
+
 	incByKey := func(key string) {
 		braces[key]++
 	}
@@ -49,7 +49,7 @@ func ValidBraces(str string) bool {
 
 	if braces["{"] != 0 || braces["["] != 0 || braces["("] != 0 {
 		result = false
-	} 
+	}
 
 	return result
 }

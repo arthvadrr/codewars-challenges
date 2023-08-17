@@ -12,7 +12,7 @@ func Parse(data string) []int {
 			return x - 1
 		},
 		"s": func(x int) int {
-			return x * x
+		return x * x
 		},
 		"o": func(x int) int {
 			result = append(result, x)

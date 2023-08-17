@@ -1,4 +1,4 @@
-function permute(nums) {
+function bigolfunc(nums) {
   const P = (amount, result = 1) => {
     while (amount > 1) result *= amount--;
     return result;
@@ -12,7 +12,7 @@ function permute(nums) {
   return result;
 }
 
-console.log(permute([1, 2, 3]))
+console.log(bigolfunc([1, 2, 3]))
 
 /*
 def permute(nums)
