@@ -3,17 +3,12 @@
 * Array items should increase linearly. The first array item in the result is always 0.
 *
 * Note that a length of 1 should always return 0 regardless of if it equals the sum.
-*
-* @param length {number}
-* @param sum {number}
 */
-const getProgressiveArray = (
-    length: number,
-    sum: number
-): number[] => {
+function getProgressiveArray (length: number, sum: number): number[]
+{
     const result: number[] = [];
-    const  delta: number = sum / (length - 1);
-    let  current: number = 0;
+    const delta: number = sum / (length - 1);
+    let current: number = 0;
 
     for (let i = 0; i < length; i++) {
         result.push((current / length) * 2);
@@ -25,29 +20,22 @@ const getProgressiveArray = (
 
 /**
 * Test function
-*
-* @param length {number}
-* @param sum {number}
-* @param result {number[]}
 */
-const log_example = (
-    length: number,
-    sum: number,
-    result: number[]
-): void => {
-    console.log(`Test\n\nLength: ${length} | Sum: ${sum}\n\nResult:`);
-    console.table(result);
-    console.log('The sum of the array items reduced should equal the sum:\n');
-    console.log(`Array items reduced: ${result.reduce((a, b) => a + b, 0)}`)
-    console.log(`________________Sum: ${sum}\n\n`);
-    console.log('----------------------------------------------------------------');
+function log_example(length: number, sum: number, result: number[]): void
+{
+    const { log: l, table: t } = console;
+    l( 'Test\n\n' );
+    l( `Length: ${length} | Sum: ${sum}\n\n` );
+    l( 'Result:' );
+    t( result );
+    l( 'The sum of the array items reduced should equal the sum:\n' );
+    l( `Array items reduced: ${result.reduce((a, b) => a + b, 0)}` )
+    l( `________________Sum: ${sum}\n\n` );
+    l( '----------------------------------------------------------------' );
 }
 
 /**
 * Tests
-*
-* examples[*][0] = Length
-* examples[*][1] = sum
 */
 interface Example {
     length: number;
