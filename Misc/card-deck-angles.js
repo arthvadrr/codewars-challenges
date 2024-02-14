@@ -13,7 +13,7 @@ function getTheAngles(amount, angleOffset = 2) {
 
   for (let i = index; i < amount; i += 2) {
     result.push(currentAngle, currentAngle * -1);
-    currentAngle += angleOffset;
+    currentAngle += angleOffset + i;
   }
 
   return result.sort((a, b) => a - b);

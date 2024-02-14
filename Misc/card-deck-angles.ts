@@ -26,7 +26,7 @@ function getAngles({ amount, angleOffset = 2, startingAngle = 2, max = 45 }: Rot
 
   for (let i = index; i < amount; i += 2) {
     result.push(currentAngle, currentAngle * -1);
-    currentAngle += angleOffset;
+    currentAngle += angleOffset + i;
 
     if (currentAngle > max) currentAngle = max;
   }
