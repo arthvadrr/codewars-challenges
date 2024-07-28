@@ -43,7 +43,7 @@ def get_min_base(n):
         if _(n, i): return i
     return n - 1
 import math
-def _(number, base):lambda: math.log(number * (base - 1) + 1, base).is_integer()
+def _(number, base): var = lambda: math.log(number * (base - 1) + 1, base).is_integer()
 
 
 def get_min_base(n):
