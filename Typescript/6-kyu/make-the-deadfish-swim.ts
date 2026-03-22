@@ -15,34 +15,36 @@ Invalid characters should be ignored.
 parse("iiisdoso") => [8, 64]
 */
 
-function parse (data: string): number[] {
-  let result: Array<number> = []
-  let dataArr: Array<string> = data.split('')
-  let modNum: number = 0
-
-  interface DataFunction {
-    "i": Function,
-    "d": Function,
-    "s": Function,
-    "o": Function
-   }
-
-  let parser: DataFunction = {
-    "i": (x:number): number => ++x,
-    "d": (x:number): number => --x,
-    "s": (x:number): number => x*x,
-    "o": (x:number): any => result.push(x)
-   }
-
-  for (const data of dataArr) {
-    if (parser[data as keyof DataFunction]) {
-      if (data === 'o') parser[data as keyof DataFunction](modNum)
-      else modNum = parser[data as keyof DataFunction](modNum)
-    }
-  }
-
-  return result
+interface DataFunction {
+	i: Function;
+	d: Function;
+	s: Function;
+	o: Function;
 }
 
-console.log(parse("iiisdoso"))
-console.log(parse("iiisxxxdoso"))
+function parse(data: string): number[] {
+	let result: Array<number> = [];
+	let dataArr: Array<string> = data.split('');
+	let modNum: number = 0;
+
+	let parser: DataFunction = {
+		i: (x: number): number => ++x,
+		d: (x: number): number => --x,
+		s: (x: number): number => x * x,
+		o: (x: number): any => result.push(x),
+	};
+
+	let showATypeError: string = 123;
+
+	for (const data of dataArr) {
+		if (parser[data as keyof DataFunction]) {
+			if (data === 'o') parser[data as keyof DataFunction](modNum);
+			else modNum = parser[data as keyof DataFunction](modNum);
+		}
+	}
+
+	return result;
+}
+
+console.log(parse('iiisdoso'));
+console.log(parse('iiisxxxdoso'));

@@ -31,7 +31,7 @@ Notes:
     In the result codes and their values are in the same order as in M.
     See "Samples Tests" for the return.
 */
-const stockList = (listOfArt, listOfCat) => {
-  return 'hi';
-}
+const stockList = (listOfArt: string[], listOfCat: string[]) => {
+	return 'hi';
+};
 console.log(stockList(['hi'], ['hi']));
